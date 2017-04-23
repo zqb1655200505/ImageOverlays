@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/imageUpload"
+            android:icon="@drawable/image_upload"
+            android:title="@string/uploadImages" />
+
+        <item
+            android:id="@+id/imageManage"
+            android:icon="@drawable/image_manage"
+            android:title="@string/imageManage" />
+        <item
+            android:id="@+id/userManage"
+            android:icon="@drawable/user_manage"
+            android:title="@string/userManage" />
+        <item
+            android:id="@+id/result"
+            android:icon="@drawable/result"
+            android:title="@string/overlayResult" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/personal"
+                android:icon="@drawable/personal"
+                android:title="@string/personal" />
+            <item
+                android:id="@+id/signOut"
+                android:icon="@drawable/sign_out"
+                android:title="@string/signOut" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <solid
+                android:color="#84bde4"/>
+            <stroke android:width="2px"
+                android:color="#bcbfbf"/>
+            <corners
+                android:bottomRightRadius="10dp"
+                android:bottomLeftRadius="25px"
+                android:topLeftRadius="25px"
+                android:topRightRadius="25px"/>
+            <size
+                android:height="40dp"
+                android:width="280dp"/>
+            <padding
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"
+                android:bottom="5dp"/>
+        </shape>
+    </item>
+    <item android:state_selected="true">
+        <shape>
+            <solid
+                android:color="#84bde4"/>
+            <stroke android:width="2px"
+                android:color="#bcbfbf"/>
+            <corners
+                android:bottomRightRadius="10dp"
+                android:bottomLeftRadius="25px"
+                android:topLeftRadius="25px"
+                android:topRightRadius="25px"/>
+            <size
+                android:height="40dp"
+                android:width="280dp"/>
+            <padding
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"
+                android:bottom="5dp"/>
+        </shape>
+    </item>
+    <item android:state_hovered="true">
+        <shape>
+            <solid
+                android:color="#6fb4e4"/>
+            <stroke android:width="2px"
+                android:color="#bcbfbf"/>
+            <corners
+                android:bottomRightRadius="10dp"
+                android:bottomLeftRadius="25px"
+                android:topLeftRadius="25px"
+                android:topRightRadius="25px"/>
+            <size
+                android:height="40dp"
+                android:width="280dp"/>
+            <padding
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"
+                android:bottom="5dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid
+                android:color="#66afe3"/>
+            <stroke android:width="2px"
+                android:color="#bcbfbf"/>
+            <corners
+                android:bottomRightRadius="10dp"
+                android:bottomLeftRadius="25px"
+                android:topLeftRadius="25px"
+                android:topRightRadius="25px"/>
+            <size
+                android:height="40dp"
+                android:width="280dp"/>
+            <padding
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"
+                android:bottom="5dp"/>
+        </shape>
+    </item>
+</selector>

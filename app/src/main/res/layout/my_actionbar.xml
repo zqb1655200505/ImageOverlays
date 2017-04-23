@@ -1,0 +1,43 @@
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar_nav"
+        android:background="@drawable/back_ic"
+        android:gravity="center"
+        android:textColor="@color/red"
+        android:clickable="true"
+        android:padding="8dp"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/textWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confer"
+        android:textColor="@color/colorWhite"
+        android:layout_gravity="right"
+        android:layout_marginRight="15dp"
+        android:clickable="true"
+        android:padding="10dp"
+        android:focusable="true"
+        android:id="@+id/toolbar_btn_confer"/>
+</android.support.v7.widget.Toolbar>
