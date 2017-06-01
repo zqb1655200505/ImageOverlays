@@ -1,5 +1,6 @@
 package com.example.zqb.imageoverlaysadmin.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -7,12 +8,20 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.zqb.imageoverlaysadmin.MyApplication;
 import com.example.zqb.imageoverlaysadmin.R;
+import com.example.zqb.imageoverlaysadmin.models.NetResultData;
+import com.example.zqb.imageoverlaysadmin.models.NetUrl;
+import com.example.zqb.imageoverlaysadmin.utils.NetHelper;
+import com.example.zqb.imageoverlaysadmin.utils.NetResultListener;
 import com.example.zqb.imageoverlaysadmin.utils.SnackbarHelper;
 
 
@@ -30,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
+//        getWindow().setFlags(flag, flag);
         setContentView(R.layout.activity_register);
         init();
         tv_to_login.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                String username=et_username.getText().toString();
-                String password=et_password.getText().toString();
+                final String username=et_username.getText().toString();
+                final String password=et_password.getText().toString();
                 String confer_password=et_confer_password.getText().toString();
                 String code=et_code.getText().toString();
 
@@ -112,14 +123,40 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 //在此处进行网络请求
+                NetHelper netHelper=new NetHelper(RegisterActivity.this, NetUrl.register);
+                netHelper.setParam("username",username);
+                netHelper.setParam("password",password);
+                netHelper.setParam("userType",1+"");
+                netHelper.setResultListener(new NetResultListener() {
+                    @Override
+                    public void getResult(NetResultData result)
+                    {
+                        Toast.makeText(RegisterActivity.this,result.getMsg(),Toast.LENGTH_SHORT).show();
+                        //注册成功，将注册信息返回登录界面
+                        if(result.getCode()==1)
+                        {
+                            Intent mIntent = new Intent();
+                            mIntent.putExtra("username",username);
+                            mIntent.putExtra("password",password);
+                            setResult(RESULT_OK,mIntent);
+                            finish();
+                        }
+                        else
+                        {
+                            et_password.setText("");
+                            et_confer_password.setText("");
+                            et_username.setText("");
+                            et_code.setText("");
+                        }
+                    }
 
+                    @Override
+                    public void getError(Context context) {
+                        super.getError(context);
+                    }
+                });
 
-                //注册成功，将注册信息返回登录界面
-                Intent mIntent = new Intent();
-                mIntent.putExtra("username",username);
-                mIntent.putExtra("password",password);
-                setResult(RESULT_OK,mIntent);
-                finish();
+                netHelper.doPost();
             }
         });
 
@@ -150,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
                         btn_get_code.setClickable(true);
                         btn_get_code.setFocusable(true);
                         //btn_get_code.setTextColor(ContextCompat.getColor(RegisterActivity.this, R.color.colorAccent));
-                        btn_get_code.setTextColor(Color.BLACK);
+                        btn_get_code.setTextColor(Color.WHITE);
                     }
                 }
 

@@ -23,5 +23,8 @@ public class MyApplication extends Application {
         netQueue = Volley.newRequestQueue(this);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+
     }
+
 }

@@ -2,7 +2,6 @@ package com.example.zqb.imageoverlaysadmin.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -13,9 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.example.zqb.imageoverlaysadmin.R;
 
-import java.io.File;
 
 /**
  * 通用的RecyclerView.vVewHolder
@@ -41,21 +42,21 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
      * @param position
      * @return
      */
-    public static RecyclerViewHolder get(Context context, View convertView, ViewGroup parent, int layoutId, int position)
-    {
-        RecyclerViewHolder holder = null;
-        if (convertView == null)
-        {
-            holder = new RecyclerViewHolder(LayoutInflater.from(context)
-                    .inflate(layoutId,parent,false));
-        }
-        else
-        {
-            holder = (RecyclerViewHolder) convertView.getTag();
-            holder.mPosition = position;
-        }
-        return holder;
-    }
+//    public static RecyclerViewHolder get(Context context, View convertView, ViewGroup parent, int layoutId, int position)
+//    {
+//        RecyclerViewHolder holder = null;
+//        if (convertView == null)
+//        {
+//            holder = new RecyclerViewHolder(LayoutInflater.from(context)
+//                    .inflate(layoutId,parent,false));
+//        }
+//        else
+//        {
+//            holder = (RecyclerViewHolder) convertView.getTag();
+//            holder.mPosition = position;
+//        }
+//        return holder;
+//    }
     /**
      * 通过控件的Id获取对于的控件，如果没有则加入views
      * @param viewId
@@ -120,6 +121,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 根据View本身的大小加载对应大小图片
      * 为ImageView设置图片
      * @param viewId
      * @param url
@@ -131,11 +133,64 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
                 .load(url)
                 .asBitmap()
                 .placeholder(R.drawable.error_pic)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into((ImageView)getView(viewId));
         return this;
     }
 
+    /**
+     *                  注意：此方法加载大量大图片时会出现OOM
+     * 为ImageView设置图片,使用recyclerView不确定高度的情况
+     * @param viewId
+     * @param url
+     * @param width
+     * @return
+     *
+     */
+    public RecyclerViewHolder setImageByUrl(int viewId, String url, final int width)
+    {
+        final ImageView ivImage=(ImageView)getView(viewId);
+        Glide.with(itemView.getContext())
+                .load(url)
+                .asBitmap()
+                .placeholder(R.drawable.error_pic)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        //原始图片宽高
+                        int imageWidth = resource.getWidth();
+                        int imageHeight = resource.getHeight();
+                        //按比例收缩图片
+                        float ratio=(float) ((imageWidth*1.0)/(width*1.0));
+                        int height=(int) (imageHeight*1.0/ratio);
+                        ViewGroup.LayoutParams params = ivImage.getLayoutParams();
+                        params.width=width;
+                        params.height=height;
+                        ivImage.setImageBitmap(resource);
+                    }
+                });
+        return this;
+    }
 
+    /**
+     * 为ImageView设置图片,重新设置高宽
+     * @param viewId
+     * @param url
+     * @param width
+     * @param height
+     * @return
+     */
+    public RecyclerViewHolder setImageByUrl(int viewId, String url, final int width,int height)
+    {
+        Glide.with(itemView.getContext())
+                .load(url)
+                .asBitmap()
+                .placeholder(R.drawable.error_pic)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .override(width,height)
+                .into((ImageView)getView(viewId));
+        return this;
+    }
 }
 

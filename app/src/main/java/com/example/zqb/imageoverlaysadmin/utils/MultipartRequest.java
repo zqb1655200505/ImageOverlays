@@ -24,7 +24,7 @@ import java.io.IOException;
          }
  */
 
-public class MultipartRequest extends StringRequest {
+public class MultipartRequest extends MyStringRequest {
     private Part[] parts;
     public MultipartRequest(String url, Part[] parts, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.POST, url, listener, errorListener);

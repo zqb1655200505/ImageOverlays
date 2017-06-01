@@ -30,7 +30,6 @@ public class PictureSlidePagerAdapter extends FragmentStatePagerAdapter {
             System.out.println(dir+"/"+NetUrl.imageUrls.get(init_index));
             return PictureSlideFragment.getInstance(dir+"/"+NetUrl.imageUrls.get(init_index));
         }
-        System.out.println(dir+"/"+NetUrl.imageUrls.get(position));
         return PictureSlideFragment.getInstance(dir+"/"+NetUrl.imageUrls.get(position));
     }
 

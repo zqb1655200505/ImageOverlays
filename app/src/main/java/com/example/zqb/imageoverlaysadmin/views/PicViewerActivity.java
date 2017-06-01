@@ -21,7 +21,6 @@ public class PicViewerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView tv_toolbar_nav;
     private TextView tv_toolbar_confer;
-    private int length= NetUrl.imageUrls.size();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,7 @@ public class PicViewerActivity extends AppCompatActivity {
         tv_toolbar_confer= (TextView) findViewById(R.id.toolbar_btn_confer);
         tv_toolbar_confer.setVisibility(View.GONE);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tv_indicator = (TextView) findViewById(R.id.tv_indicator);
+        //tv_indicator = (TextView) findViewById(R.id.tv_indicator);
         int index=getIntent().getIntExtra("image_index",1);
         String dir=getIntent().getStringExtra("dir");
         viewPager.setAdapter(new PictureSlidePagerAdapter(getSupportFragmentManager(),index,dir));
@@ -49,7 +48,7 @@ public class PicViewerActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                tv_indicator.setText(String.valueOf(position+1)+"/"+ length);
+                //tv_indicator.setText(String.valueOf(position+1)+"/"+ length);
             }
 
             @Override

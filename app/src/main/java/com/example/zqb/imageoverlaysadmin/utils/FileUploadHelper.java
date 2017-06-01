@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.example.zqb.imageoverlaysadmin.MyApplication;
 import com.example.zqb.imageoverlaysadmin.models.NetResultData;
 import com.example.zqb.imageoverlaysadmin.models.NetUrl;
+import com.example.zqb.imageoverlaysadmin.models.UserData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +41,7 @@ public class FileUploadHelper {
 
     public void doUpload()
     {
-        MultipartRequest profileUpdateRequest = new MultipartRequest(NetUrl.upload_person_pic,
+        MultipartRequest profileUpdateRequest = new MultipartRequest(url,
                 partList.toArray(new Part[partList.size()]),
                 new Response.Listener<String>() {
                     @Override
@@ -48,10 +49,19 @@ public class FileUploadHelper {
                         NetResultData result = new NetResultData();
                         try {
                             JSONObject jsonObject=new JSONObject(response);
-                            result.setCode(jsonObject.optInt("code"));
-                            result.setMsg(jsonObject.optString("msg"))   ;
-                            result.setData(jsonObject.optJSONArray("data"));
-                            netResultListener.getResult(result);
+                            if(result.getCode()==-1)
+                            {
+                                ToastHelper.make(context,"登录状态失效，请重新登录");
+                                UserData.clear(context);
+                            }
+                            else
+                            {
+                                result.setCode(jsonObject.optInt("code"));
+                                result.setMsg(jsonObject.optString("message"))   ;
+                                result.setData(jsonObject.optJSONArray("data"));
+                                netResultListener.getResult(result);
+                            }
+
                         } catch (JSONException e)
                         {
                             e.printStackTrace();
@@ -64,6 +74,10 @@ public class FileUploadHelper {
                 netResultListener.getError(context);
             }
         });
+        if(!NetUrl.cookie.equals(""))
+        {
+            profileUpdateRequest.setSendCookie(NetUrl.cookie);
+        }
         queue.add(profileUpdateRequest);
     }
 }

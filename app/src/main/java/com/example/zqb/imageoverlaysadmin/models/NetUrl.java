@@ -15,10 +15,22 @@ public class NetUrl {
     public static final int personal_action_pick_request_code = 3;
 
     //网络请求url
-    public static final String login="";
+    private static final String baseUrl="http://114.115.215.47:8080/picture_cognition/basic/";
+    public static final String login=baseUrl+"login";
+    public static final String register=baseUrl+"register";
+    public static final String sign_out=baseUrl+"signOut";
+    public static final String update_signature=baseUrl+"updateSign";
+    public static final String update_nickname=baseUrl+"updateNickname";
+    public static final String update_sex=baseUrl+"updateSex";
+    public static final String update_password=baseUrl+"updatePassword";
+    public static final String batch_upload_pic=baseUrl+"upload";
     public static final String upload_person_pic="";
-    public static final String batch_upload_pic="";
 
     //全局变量
     public static List<String> imageUrls;
+    public static String dir;
+    public static String cookie="";
+
+
+
 }

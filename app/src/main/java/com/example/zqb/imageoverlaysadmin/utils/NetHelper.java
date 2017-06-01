@@ -1,7 +1,6 @@
 package com.example.zqb.imageoverlaysadmin.utils;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -9,11 +8,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.zqb.imageoverlaysadmin.MyApplication;
 import com.example.zqb.imageoverlaysadmin.models.NetResultData;
+import com.example.zqb.imageoverlaysadmin.models.NetUrl;
+import com.example.zqb.imageoverlaysadmin.models.UserData;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,16 +47,31 @@ public class NetHelper {
 
     public void doPost()
     {
-        final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        final MyStringRequest request=new MyStringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(String response)
+            {
+                System.out.println(response);
                 NetResultData result = new NetResultData();
                 try {
                     JSONObject jsonObject=new JSONObject(response);
-                    result.setCode(jsonObject.optInt("code"));
-                    result.setMsg(jsonObject.optString("msg"))   ;
-                    result.setData(jsonObject.optJSONArray("data"));
-                    netResultListener.getResult(result);
+                    if(jsonObject.optInt("code")==-1)
+                    {
+                        ToastHelper.make(context,"登录状态失效，请重新登录");
+                        UserData.clear(context);
+                    }
+                    else
+                    {
+                        result.setCode(jsonObject.optInt("code"));
+                        result.setMsg(jsonObject.optString("message"));
+                        if(NetUrl.cookie.equals(""))
+                        {
+                            NetUrl.cookie=jsonObject.optString("cookie");
+                            System.out.println(NetUrl.cookie);
+                        }
+                        result.setData(jsonObject.optJSONArray("data"));
+                        netResultListener.getResult(result);
+                    }
                 } catch (JSONException e)
                 {
                     e.printStackTrace();
@@ -67,6 +81,7 @@ public class NetHelper {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println("error message: "+error.getMessage());
                 netResultListener.getError(context);
             }
         }){
@@ -75,6 +90,10 @@ public class NetHelper {
                 return map;
             }
         };
+        if(!NetUrl.cookie.equals(""))
+        {
+            request.setSendCookie(NetUrl.cookie);
+        }
         queue.add(request);
     }
 

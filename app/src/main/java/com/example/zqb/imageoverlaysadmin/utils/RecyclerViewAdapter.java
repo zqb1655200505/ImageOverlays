@@ -22,7 +22,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
     private int mLayoutId;
     private LayoutInflater mInflater;
 
-    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener=null;
 
     public RecyclerViewAdapter(Context mContext,List<T> mDatas,int mLayoutId)
     {
