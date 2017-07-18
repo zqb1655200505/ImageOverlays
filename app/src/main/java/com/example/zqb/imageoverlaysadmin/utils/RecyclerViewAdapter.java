@@ -35,7 +35,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //这里是创建ViewHolder的地方，RecyclerAdapter内部已经实现了ViewHolder的重用
-        //这里我们直接new就好了
+        //这里直接new就好了
         return new RecyclerViewHolder(mInflater.inflate(mLayoutId, parent, false));
     }
 
@@ -60,7 +60,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
     public abstract void convert(RecyclerViewHolder holder, T data, int position);
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return mDatas == null ? 0 : mDatas.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

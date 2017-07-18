@@ -15,14 +15,6 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <TextView
-            android:id="@+id/tv_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_alignTop="@+id/viewpager"
-            android:textSize="30sp"
-            android:textColor="#ffffff" />
     </RelativeLayout>
 
 </LinearLayout>

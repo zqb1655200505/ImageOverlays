@@ -2,10 +2,8 @@ package com.example.zqb.imageoverlaysadmin.views;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -35,6 +32,8 @@ import com.example.zqb.imageoverlaysadmin.utils.ToastHelper;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    //记录用户首次点击返回键的时间
+    private long firstTime = 0;
 
     private String TAG="MainActivity";
     private TextView tv_title;
@@ -106,6 +105,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        if(UserData.username!=null&&!UserData.username.equals("null"))
+        {
+            tv_username.setText(UserData.username);
+        }
+        if(UserData.sign!=null&&!UserData.sign.equals("null"))
+        {
+            tv_signature.setText(UserData.sign);
+        }
+        else
+        {
+            tv_signature.setText("暂无签名");
+        }
         nav_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,31 +163,37 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {
+                ToastHelper.make(MainActivity.this, "再按一次退出程序");
+                firstTime = secondTime;
+            } else {
+                finish();
+            }
+
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -212,20 +229,7 @@ public class MainActivity extends AppCompatActivity
             }
             case R.id.signOut:
             {
-                //服务器注销
-//                NetHelper netHelper=new NetHelper(MainActivity.this,NetUrl.sign_out);
-//                netHelper.setParam("userId",UserData.id+"");
-//                netHelper.setResultListener(new NetResultListener() {
-//                    @Override
-//                    public void getResult(NetResultData result) {
-//                        if(result.getCode()==1)
-//                        {
-//                            ToastHelper.make(MainActivity.this,result.getMsg());
-//                            //客户端注销
-//                            UserData.clear(MainActivity.this);
-//                        }
-//                    }
-//                });
+
                 UserData.clear(MainActivity.this);
                 break;
             }
@@ -243,9 +247,7 @@ public class MainActivity extends AppCompatActivity
             {
                 case NetUrl.main_personal_request_code:
                 {
-                    ToastHelper.make(MainActivity.this,"哈哈哈哈00");
-                    tv_username.setText(UserData.username==null?"":UserData.username);
-                    tv_signature.setText(UserData.sign==null?"":UserData.sign);
+                    tv_signature.setText(UserData.sign==null?"暂无签名":UserData.sign);
                     if(UserData.headImage!=null)
                     {
                         Glide.with(MainActivity.this)

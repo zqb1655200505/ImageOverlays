@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/cardBack"
     tools:context="com.example.zqb.imageoverlaysadmin.views.MainActivity">
 
     <!--这里的toolbar不能通过include来引用，因为会由于标签的合并而出错-->

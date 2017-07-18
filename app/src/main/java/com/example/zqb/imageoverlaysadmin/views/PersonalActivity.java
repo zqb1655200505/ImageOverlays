@@ -66,27 +66,32 @@ public class PersonalActivity extends AppCompatActivity {
         tv_title.setText(R.string.personal);
         tv_confer.setVisibility(View.GONE);
 
-        if(UserData.sex!=null)
+        if(UserData.sex!=null&&!UserData.sex.equals("null"))
         {
             tv_sex.setText(UserData.sex);
         }
-        if(UserData.username!=null)
+        else
+        {
+            tv_sex.setText(NetUrl.unSet);
+        }
+        if(UserData.username!=null&&!UserData.username.equals("null"))
         {
             tv_username.setText(UserData.username);
         }
-        if(UserData.headImage!=null)
+        if(UserData.headImage!=null&&!UserData.headImage.equals("null"))
         {
             Glide.with(PersonalActivity.this)
                     .load(UserData.headImage)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .placeholder(R.drawable.icon_user)
                     .centerCrop()
                     .into(iv_head_pic);
         }
-        if(UserData.sign!=null)
+        if(UserData.sign!=null&&!UserData.sign.equals("null"))
         {
             tv_signature.setText(UserData.sign);
         }
-        if(UserData.nickname!=null)
+        if(UserData.nickname!=null&&!UserData.nickname.equals("null"))
         {
             tv_nickname.setText(UserData.nickname);
         }
@@ -133,13 +138,19 @@ public class PersonalActivity extends AppCompatActivity {
                 View view = LayoutInflater.from(PersonalActivity.this).inflate(R.layout.dialog_update_nickname,null,false);
                 builder.setView(view);
                 final AlertDialog dialog = builder.create();
-
                 final TextInputLayout til_nickname= (TextInputLayout) view.findViewById(R.id.til_nickname);
+                til_nickname.getEditText().setText(tv_nickname.getText().toString());
                 Button tv_confer= (Button) view.findViewById(R.id.confer_update);
                 tv_confer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String nickname=til_nickname.getEditText().getText().toString();
+                        final String nickname=til_nickname.getEditText().getText().toString().trim();
+                        AppHelper.hideSoftInput(v,PersonalActivity.this);
+//                        if(nickname.equals(""))
+//                        {
+//                            ToastHelper.make(PersonalActivity.this,"昵称不能为空");
+//                            return;
+//                        }
                         NetHelper netHelper=new NetHelper(PersonalActivity.this,NetUrl.update_nickname);
                         //netHelper.setParam("userId",UserData.id+"");
                         netHelper.setParam("nickname",nickname);
@@ -173,11 +184,18 @@ public class PersonalActivity extends AppCompatActivity {
                 builder.setView(view);
                 final AlertDialog dialog = builder.create();
                 final TextInputLayout til_signature= (TextInputLayout) view.findViewById(R.id.til_signature);
+                til_signature.getEditText().setText(tv_signature.getText());
                 Button tv_confer= (Button) view.findViewById(R.id.confer_update);
                 tv_confer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String signature=til_signature.getEditText().getText().toString();
+                        final String signature=til_signature.getEditText().getText().toString().trim();
+                        AppHelper.hideSoftInput(v,PersonalActivity.this);
+//                        if(signature.equals(""))
+//                        {
+//                            ToastHelper.make(PersonalActivity.this,"签名不能为空");
+//                            return;
+//                        }
                         NetHelper netHelper=new NetHelper(PersonalActivity.this,NetUrl.update_signature);
                         netHelper.setParam("sign",signature);
                         netHelper.setResultListener(new NetResultListener() {
@@ -211,7 +229,14 @@ public class PersonalActivity extends AppCompatActivity {
                 builder.setView(view);
                 final AlertDialog dialog = builder.create();
                 final Spinner sex_spinner= (Spinner) view.findViewById(R.id.sex_spinner);
-                sex_spinner.setSelection(1);
+                if(UserData.sex.equals("男"))
+                {
+                    sex_spinner.setSelection(1);
+                }
+                else if(UserData.sex.equals("女"))
+                {
+                    sex_spinner.setSelection(2);
+                }
                 Button tv_confer= (Button) view.findViewById(R.id.confer_update);
 
                 tv_confer.setOnClickListener(new View.OnClickListener() {
@@ -258,18 +283,18 @@ public class PersonalActivity extends AppCompatActivity {
                 tv_confer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String old_password=til_old_password.getEditText().getText().toString();
-                        String new_password=til_new_password.getEditText().getText().toString();
-                        String confer_password=til_confer_password.getEditText().getText().toString();
+                        AppHelper.hideSoftInput(v,PersonalActivity.this);
+                        String old_password=til_old_password.getEditText().getText().toString().trim();
+                        String new_password=til_new_password.getEditText().getText().toString().trim();
+                        String confer_password=til_confer_password.getEditText().getText().toString().trim();
                         if(old_password.equals(""))
                         {
-                            AppHelper.hideSoftInput(v,PersonalActivity.this);
+
                             ToastHelper.make(PersonalActivity.this,"请填写原密码");
                             return;
                         }
                         if(new_password.equals(""))
                         {
-                            AppHelper.hideSoftInput(v,PersonalActivity.this);
                             ToastHelper.make(PersonalActivity.this,"请填写新密码");
                             return;
                         }
@@ -280,7 +305,6 @@ public class PersonalActivity extends AppCompatActivity {
                         }
                         if(!new_password.equals(confer_password))
                         {
-                            AppHelper.hideSoftInput(v,PersonalActivity.this);
                             ToastHelper.make(PersonalActivity.this,"新密码前后不一致");
                             return;
                         }
@@ -343,7 +367,7 @@ public class PersonalActivity extends AppCompatActivity {
                             SnackbarHelper.make(toolbar,result.getMsg());
                         }
                     });
-                    fileUpload.doUpload();
+                    fileUpload.doPost();
                     break;
                 }
 

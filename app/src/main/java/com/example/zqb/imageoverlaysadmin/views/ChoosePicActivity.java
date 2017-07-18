@@ -2,7 +2,6 @@ package com.example.zqb.imageoverlaysadmin.views;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -195,7 +194,7 @@ public class ChoosePicActivity extends AppCompatActivity {
                         ToastHelper.make(ChoosePicActivity.this,result.getMsg());
                     }
                 });
-                fileUpload.doUpload();
+                fileUpload.doPost();
             }
         });
 

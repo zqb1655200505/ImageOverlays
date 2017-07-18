@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.example.zqb.imageoverlaysadmin.MyApplication;
+import com.example.zqb.imageoverlaysadmin.utils.NetHelper;
+import com.example.zqb.imageoverlaysadmin.utils.NetResultListener;
+import com.example.zqb.imageoverlaysadmin.utils.ToastHelper;
 import com.example.zqb.imageoverlaysadmin.views.LoginActivity;
 
 /**
@@ -19,7 +22,7 @@ public class UserData {
     public static String headImage;
     public static String nickname;
     //清除登录信息
-    public static void clear(Context context)
+    public static void clear(final Context context)
     {
         id=0;
         username=null;
@@ -34,6 +37,21 @@ public class UserData {
         editor.remove("username");
         editor.remove("password");
         editor.apply();
+
+        //清除服务器session
+//        NetHelper netHelper=new NetHelper(context,NetUrl.sign_out);
+//        netHelper.setParam("userId",UserData.id+"");
+//        netHelper.setResultListener(new NetResultListener() {
+//            @Override
+//            public void getResult(NetResultData result) {
+//                if(result.getCode()==1)
+//                {
+//                    ToastHelper.make(context,result.getMsg());
+//                    //客户端注销
+//                    UserData.clear(context);
+//                }
+//            }
+//        });
 
         //返回登录界面
         Intent intent=new Intent(context, LoginActivity.class);

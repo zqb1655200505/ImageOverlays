@@ -35,6 +35,7 @@ public class MyStringRequest extends StringRequest
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response)
     {
+
         if(NetUrl.cookie.equals(""))
         {
             try {

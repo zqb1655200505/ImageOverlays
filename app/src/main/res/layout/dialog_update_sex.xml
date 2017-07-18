@@ -8,21 +8,22 @@
     <include layout="@layout/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_signature"
+    <ImageView
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_height="120dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textSize="20sp"
-            android:hint="签名" />
-
-    </android.support.design.widget.TextInputLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/line"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/sex_spinner"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:entries="@array/sexArray"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +31,7 @@
         android:background="@drawable/btn_back"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/confer_update"
         android:layout_gravity="end"/>
 </LinearLayout>

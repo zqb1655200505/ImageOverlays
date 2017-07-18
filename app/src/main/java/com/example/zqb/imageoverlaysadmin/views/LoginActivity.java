@@ -33,6 +33,7 @@ import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private TextView tv_forget_password;
     private TextView tv_to_register;
     private EditText et_username;
     private EditText et_password;
@@ -64,12 +65,18 @@ public class LoginActivity extends AppCompatActivity {
             {
                 et_username.setText(username);
                 et_password.setText(password);
+                doLogin();
             }
-            doLogin();
-            return;
+
         }
 
-
+        tv_forget_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this,ReSetPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         tv_to_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +164,7 @@ public class LoginActivity extends AppCompatActivity {
         et_username= (EditText) findViewById(R.id.username);
         et_password= (EditText) findViewById(R.id.password);
         btn_login= (Button) findViewById(R.id.login);
+        tv_forget_password= (TextView) findViewById(R.id.forgetPassword);
     }
 
     @Override

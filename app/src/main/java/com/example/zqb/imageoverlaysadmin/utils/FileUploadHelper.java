@@ -1,7 +1,6 @@
 package com.example.zqb.imageoverlaysadmin.utils;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.internal.http.multipart.Part;
 import com.android.volley.RequestQueue;
@@ -39,7 +38,7 @@ public class FileUploadHelper {
         this.netResultListener = listener;
     }
 
-    public void doUpload()
+    public void doPost()
     {
         MultipartRequest profileUpdateRequest = new MultipartRequest(url,
                 partList.toArray(new Part[partList.size()]),
@@ -65,7 +64,7 @@ public class FileUploadHelper {
                         } catch (JSONException e)
                         {
                             e.printStackTrace();
-                            Toast.makeText(context, "数据解析错误", Toast.LENGTH_SHORT).show();
+                            ToastHelper.make(context, "数据解析错误");
                         }
                     }
                 }, new Response.ErrorListener() {

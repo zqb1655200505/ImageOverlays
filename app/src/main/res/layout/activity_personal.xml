@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/cardBack"
     tools:context="com.example.zqb.imageoverlaysadmin.views.PersonalActivity">
+
 
     <include layout="@layout/my_actionbar"/>
 
@@ -15,7 +17,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
         android:padding="5dp"
-        android:background="@color/cardBack">
+        android:background="@color/white">
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -25,22 +27,117 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
             android:orientation="vertical"
             android:layout_gravity="center">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:textSize="16dp"
                 android:gravity="center|start"
-                android:id="@+id/username"
-                android:textColor="@color/textBlack" />
+                android:id="@+id/nickname"
+                android:maxLines="1"
+                android:textColor="@color/textBlack"
+                android:text="@string/nickname"
+                android:ellipsize="end"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:textSize="16dp"
                 android:id="@+id/signature"
                 android:gravity="center|start"
-                android:textColor="@color/text_Grey" />
+                android:textColor="@color/text_Grey"
+                android:text="@string/signature"
+                android:ellipsize="end"/>
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/ll_username"
+        android:background="@color/white"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:id="@+id/username_title"
+            android:gravity="center_vertical"
+            android:textSize="16dp"
+            android:ellipsize="end"
+            android:text="@string/username" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:id="@+id/username"
+            android:gravity="center_vertical|end"
+            android:textSize="16dp"
+            android:ellipsize="end"
+            android:text="@string/undefine" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:id="@+id/ll_sex"
+        android:background="@color/white"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:id="@+id/sex_title"
+            android:gravity="center_vertical"
+            android:textSize="16dp"
+            android:ellipsize="end"
+            android:text="@string/sex" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:id="@+id/sex"
+            android:gravity="center_vertical|end"
+            android:textSize="16dp"
+            android:ellipsize="end"
+            android:text="@string/undefine" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:padding="5dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/update_password"
+        android:paddingStart="15dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="15dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="16dp"
+        android:text="@string/updatePassword"
+        android:background="@color/white"/>
 </LinearLayout>

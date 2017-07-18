@@ -26,10 +26,8 @@ import java.util.Map;
 public class NetHelper {
     private RequestQueue queue= MyApplication.netQueue;
     private NetResultListener netResultListener=null;
-
     private Context context;
     private String url;
-
     private HashMap<String,String> map;
 
     public NetHelper(Context context,String url)
